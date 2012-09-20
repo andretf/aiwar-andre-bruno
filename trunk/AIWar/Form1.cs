@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AIWar.Properties;
 using AIWar.Core;
 
 namespace AIWar
@@ -13,27 +14,27 @@ namespace AIWar
     public partial class Form1 : Form
     {
         protected int[,] GameMatrix = new int[21, 6] {
+            {  0, 0, 1, 0, 0, 0 },
+            {0, 0, 3, 3, 0, 0 },
+            {  0, 2, 2, 2, 0, 0 },
+            {0, 0, 3, 3, 0, 0 },
+            {  0, 0, 2, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0 },
+            {  0, 0, 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0 },
+            {  0, 0, 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0 },
+            {  0, 0, 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0 },
+            {  0, 0, 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0 },
+            {  0, 0, 0, 0, 0, 0 },
             {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0 }
+            {  0, 0, 0, 0, 0, 0 },
+            {0, 0, 3, 3, 0, 0 },
+            {  0, 2, 2, 2, 0, 0 },
+            {0, 0, 3, 3, 0, 0 },
+            {  0, 0, 1, 0, 0, 0 }
         };
         protected PictureBox[,] GamePictureMatrix = new PictureBox[21, 6];
         protected int ObjectsSize = 15;
@@ -63,13 +64,18 @@ namespace AIWar
                 for (int j = 0; j < 6; j++)
                 {
                     if (GameMatrix[i, j] > 0) {
-                        GamePictureMatrix[i, j] = new PictureBox()
+                        /*GamePictureMatrix[i, j] = new PictureBox()
                         {
                             BackColor = System.Drawing.Color.Transparent,
                             Size = new Size(ObjectsSize, ObjectsSize),
                             Location = new Point(CelulaTabuleiroSize * i, CelulaTabuleiroSize * j),
                             Image = Pecas.GetImage(GameMatrix[i, j])
-                        };
+                        };*/
+                        PictureBox e = new PictureBox();
+                        e.BackColor = System.Drawing.Color.Transparent;
+                        e.Location = new Point(CelulaTabuleiroSize * i, CelulaTabuleiroSize * j);
+                        e.Size = new Size(ObjectsSize, ObjectsSize);
+                        e.Image = Resources.tokenBlackEletron;
                     }
                     
 
