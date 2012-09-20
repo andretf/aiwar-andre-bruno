@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace AIWar.Core
 {
@@ -10,6 +11,7 @@ namespace AIWar.Core
         protected List<GameObject> Lista;
 
         public GameObjectCollection(){
+            this.Lista = new List<GameObject>();
             this.Lista.Add(new GameObject(1, "tokenBlackNeutron"));
             this.Lista.Add(new GameObject(2, "tokenBlackEletron"));
             this.Lista.Add(new GameObject(3, "tokenBlackPositron"));
@@ -20,9 +22,9 @@ namespace AIWar.Core
 
         public System.Drawing.Image GetImage(int id)
         {
-            return (from img in Lista
-                    where img.ID = id
-                    select Properties.Resources.ResourceManager.GetObject(img.Image));
+            return (Image)(from img in Lista
+                    where img.ID.Equals(id)
+                    select Properties.Resources.ResourceManager.GetObject(img.Name)).FirstOrDefault();
         }
     }
 }
