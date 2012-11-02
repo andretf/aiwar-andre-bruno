@@ -38,7 +38,6 @@ namespace AIWar
         };
         protected PictureBox[,] GamePictureMatrix = new PictureBox[21, 6];
         protected int ObjectsSize = 15;
-        protected int CelulaTabuleiroSize = 18;
         private GameObjectCollection Pecas;
         
         public Form1()
@@ -57,22 +56,44 @@ namespace AIWar
         }
 
         protected bool Draw() {
-            //pictureBox1.Image = Properties.Resources.tabuleiro;
-            //pictureBox1.SendToBack();
             pictureBox1.Hide();
-            
             for (int i = 0; i < 21; i++)
             {
-                for (int j = 0; j < 6; j++)
+                for (int j = 0; j < 5; j++)
                 {
-                    if (GameMatrix[i, j] > 0) {
+                    if (GameMatrix[i, j] >= 0) {
+                        int offsetLeft = 0;
+                        int offsetTop = 0;
+                        if (i % 2 == 0)
+                        {
+                            offsetLeft += 28;               // Offset Fixo
+                            offsetLeft += j * 56;           // Offset Dinamicamo: i * k
+                            offsetTop += 0;                 // Offset Fixo
+                            offsetTop += i/2 * 36;          // Offset Dinamicamo: i * k
+                        }
+                        else
+                        {
+                            offsetLeft += 0;
+                            offsetLeft += j * 56;
+                            offsetTop += 18;
+                            offsetTop += (i-1) * 36;
+                        }
+                        
                         PictureBox e = new PictureBox();
+                        e.Parent = pictureBox1;
                         e.BackColor = System.Drawing.Color.Transparent;
-                        e.Location = new Point((int)(Math.Round(CelulaTabuleiroSize * j * 0.66)) + pictureBox1.Left,
-                                                (int)(Math.Round(CelulaTabuleiroSize * i * 0.66)) + pictureBox1.Top);
-                        e.Size = new Size(ObjectsSize, ObjectsSize);
-                        e.BringToFront();
-
+                        e.Margin = new Padding(0);
+                        e.TabIndex = 0;
+                        if (GameMatrix[i, j] == 0){
+                            e.Size = new Size(40, 38);
+                            e.Location = new Point(offsetLeft + pictureBox1.Left,
+                                                    offsetTop + pictureBox1.Top);
+                        }
+                        else{
+                            e.Size = new Size(15, 15);
+                            e.Location = new Point(offsetLeft + pictureBox1.Left + 8,
+                                                    offsetTop + pictureBox1.Top + 8);
+                        }
                         switch(GameMatrix[i, j]){
                             case 1: e.Image = Resources.tokenBlackNeutron; break;
                             case 2: e.Image = Resources.tokenBlackEletron; break;
@@ -80,6 +101,7 @@ namespace AIWar
                             case 4: e.Image = Resources.tokenWhiteNeutron; break;
                             case 5: e.Image = Resources.tokenWhiteEletron; break;
                             case 6: e.Image = Resources.tokenWhitePositron; break;
+                            default: e.Image = Resources.empty; break;
                         }
                         
                         
