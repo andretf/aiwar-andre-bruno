@@ -35,10 +35,12 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::AIWar.Properties.Resources.tabuleiro;
-            this.pictureBox1.Location = new System.Drawing.Point(31, 26);
+            this.pictureBox1.InitialImage = global::AIWar.Properties.Resources.tabuleiro;
+            this.pictureBox1.Location = new System.Drawing.Point(30, 25);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(681, 529);
-            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.Size = new System.Drawing.Size(324, 403);
+            this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // Form1
