@@ -84,7 +84,7 @@ namespace AIWar
             if (posicaoAtual > 0) {
                 PictureBox pecaAntiga = (PictureBox)this.Controls.Find("peca" + posicaoAtual.ToString(), true).First();
                 if (pecaAntiga != null){
-                    int posicaoAntiga = Convert.ToInt32(peca.Name.Replace("peca", ""));
+                    int posicaoAntiga = Convert.ToInt32(pecaAntiga.Name.Replace("peca", ""));
                     pecaAntiga.Image = GetImage(posicaoAntiga);
                 }
             }
