@@ -47,8 +47,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 600);
             this.Controls.Add(this.panel1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "AIwar";
+            this.Text = "AIwar";
             this.ResumeLayout(false);
 
         }

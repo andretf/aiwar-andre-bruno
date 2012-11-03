@@ -55,7 +55,7 @@ namespace AIWar
 			0, 0, 0, 0, 0, 0,
 			  0, 0, 0, 0, 0, 
 			0, 0, 0, 0, 0, 0,
-			  0, 0, 0, 0, 0, 
+			  0, 0, 5, 0, 0, 
 			0, 0, 6, 6, 0, 0,
 			  0, 5, 5, 5, 0, 
 			0, 0, 6, 6, 0, 0,
@@ -93,6 +93,25 @@ namespace AIWar
             posicaoAtual = position;
 
             peca.Image = GetBlinkedImage(position);
+
+            Core.Core core = new Core.Core();
+            MessageBox.Show("getVisaoDiagonalMaior: " + ListaItens(core.getVisaoDiagonalMaior(TabuleiroVetor, position)));
+            MessageBox.Show("getVisaoDiagonalMenor: " + ListaItens(core.getVisaoDiagonalMenor(TabuleiroVetor, position)));
+            MessageBox.Show("getVisaoVertical: " + ListaItens(core.getVisaoVertical(TabuleiroVetor, position)));
+            
+
+        }
+
+        private String ListaItens(int[] Tabuleiro)
+        {
+            String lista = "";
+
+            foreach (int num in Tabuleiro)
+            {
+                lista += num.ToString() + " ";
+            }
+
+            return lista;
         }
 
         private void PecaHover(object sender, EventArgs e){
