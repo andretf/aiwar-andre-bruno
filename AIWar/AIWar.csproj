@@ -99,6 +99,12 @@
   <ItemGroup>
     <Content Include="Resources\empty.png" />
     <Content Include="Resources\tabuleiro.png" />
+    <Content Include="Resources\tokenBlackEletron1.png" />
+    <Content Include="Resources\tokenBlackNeutron1.png" />
+    <None Include="Resources\tokenBlackPositron1.png" />
+    <Content Include="Resources\tokenWhiteEletron1.png" />
+    <Content Include="Resources\tokenWhiteNeutron1.png" />
+    <Content Include="Resources\tokenWhitePositron1.png" />
     <None Include="Resources\tokenWhitePositron.png" />
     <None Include="Resources\tokenWhiteNeutron.png" />
     <None Include="Resources\tokenWhiteEletron.png" />

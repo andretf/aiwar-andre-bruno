@@ -64,6 +64,7 @@ namespace AIWar
 
 		protected int ObjectsSize = 15;
 		private GameObjectCollection Pecas;
+        private int posicaoAtual = 0;
 		#endregion
 
 		#region "Initializers"
@@ -75,17 +76,40 @@ namespace AIWar
 		#endregion
 
 		#region "Events"
-        private void PecaClick(object sender, EventArgs e)
-		{
+        private void PecaClick(object sender, EventArgs e){
             PictureBox peca = (PictureBox)sender;
-            MessageBox.Show(peca.Name + " Click");
-		}
+            //MessageBox.Show(peca.Name + " Click");
 
-		#endregion
+            // primeira limpa todas as pecas previamente marcadas
+            if (posicaoAtual > 0) {
+                PictureBox pecaAntiga = (PictureBox)this.Controls.Find("peca" + posicaoAtual.ToString(), true).First();
+                if (pecaAntiga != null){
+                    int posicaoAntiga = Convert.ToInt32(peca.Name.Replace("peca", ""));
+                    pecaAntiga.Image = GetImage(posicaoAntiga);
+                }
+            }
+
+            int position = Convert.ToInt32(peca.Name.Replace("peca", ""));
+            posicaoAtual = position;
+
+            peca.Image = GetBlinkedImage(position);
+        }
+
+        private void PecaHover(object sender, EventArgs e){
+            PictureBox peca = (PictureBox)sender;
+            peca.Cursor = Cursors.Hand;
+
+
+        }
+        private void PecaLeave(object sender, EventArgs e){
+            PictureBox peca = (PictureBox)sender;
+            peca.BackColor = TransparencyKey;
+            peca.Cursor = Cursors.Default;
+        }
+        #endregion
 
 		#region "Main Methods"
-		protected bool initGame()
-		{
+		protected bool initGame(){
 			Pecas = new GameObjectCollection();
 
 			if (desenhaPecas())
@@ -95,42 +119,64 @@ namespace AIWar
 
 		protected bool desenhaPecas() {
 			for (int i = 0; i < 115; i++) {
-				if (TabuleiroVetor[i] > 0) {
-					PictureBox e = new PictureBox();
-                    e.Name = "peca" + i.ToString();
-					e.Parent = panel1;
-					e.BackColor = System.Drawing.Color.Transparent;
-					e.Margin = new Padding(0);
-					e.TabIndex = 0;
-					e.Size = new Size(15, 15);
-					e.Location = new Point(Positions.VetorPeca[i, 0] + panel1.Left, Positions.VetorPeca[i, 1] + panel1.Top);
-					e.Click += new System.EventHandler(this.PecaClick);
+				PictureBox e = new PictureBox();
+                e.Name = "peca" + i.ToString();
+				e.Parent = panel1;
+				e.BackColor = System.Drawing.Color.Transparent;
+				e.Margin = new Padding(0);
+				e.TabIndex = 0;
+				e.Size = new Size(15, 15);
+				e.Location = new Point(Positions.VetorPeca[i, 0] + panel1.Left, Positions.VetorPeca[i, 1] + panel1.Top);
 
-					switch(TabuleiroVetor[i]){
-						case 1: e.Image = Resources.tokenBlackNeutron; break;
-						case 2: e.Image = Resources.tokenBlackEletron; break;
-						case 3: e.Image = Resources.tokenBlackPositron; break;
-						case 4: e.Image = Resources.tokenWhiteNeutron; break;
-						case 5: e.Image = Resources.tokenWhiteEletron; break;
-						case 6: e.Image = Resources.tokenWhitePositron; break;
-					}
-						
-					this.panel1.Controls.Add(e);
-				}
-			}
+                // Eventos
+                e.Click += new System.EventHandler(this.PecaClick);
+                e.MouseHover += new System.EventHandler(this.PecaHover);
+                //e.MouseLeave += new System.EventHandler(this.PecaLeave);
+                //e.Mouse += new System.EventHandler(this.PecaHover);
+
+                // Imagem da Peca
+                e.Image = GetImage(i);
+
+                this.panel1.Controls.Add(e);
+            }
 			return false;
 		}
+
+        protected Bitmap GetBlinkedImage(int i)
+        {
+            switch (TabuleiroVetor[i])
+            {
+                case 1: return Resources.tokenBlackNeutron1;
+                case 2: return Resources.tokenBlackEletron1;
+                case 3: return Resources.tokenBlackPositron1;
+                case 4: return Resources.tokenWhiteNeutron1;
+                case 5: return Resources.tokenWhiteEletron1;
+                case 6: return Resources.tokenWhitePositron1;
+            }
+
+            return null;
+        }
+        protected Bitmap GetImage(int i)
+        {
+            switch (TabuleiroVetor[i])
+            {
+                case 1: return Resources.tokenBlackNeutron;
+                case 2: return Resources.tokenBlackEletron;
+                case 3: return Resources.tokenBlackPositron;
+                case 4: return Resources.tokenWhiteNeutron;
+                case 5: return Resources.tokenWhiteEletron;
+                case 6: return Resources.tokenWhitePositron;
+            }
+            return null;
+        }
 		#endregion
 
 
 
 
 
-		[Obsolete]
+        [Obsolete("Usar desenhaPecas()")]
 		protected bool Draw() {
-			int index = 0;
-			List<string> lines = new List<string>();
-
 			for (int i = 0; i < 21; i++)
 			{
 				for (int j = 0; j < 6; j++)
