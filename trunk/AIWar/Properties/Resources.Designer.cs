@@ -81,9 +81,23 @@ namespace AIWar.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tokenBlackEletron1 {
+            get {
+                object obj = ResourceManager.GetObject("tokenBlackEletron1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tokenBlackNeutron {
             get {
                 object obj = ResourceManager.GetObject("tokenBlackNeutron", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tokenBlackNeutron1 {
+            get {
+                object obj = ResourceManager.GetObject("tokenBlackNeutron1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -95,9 +109,23 @@ namespace AIWar.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tokenBlackPositron1 {
+            get {
+                object obj = ResourceManager.GetObject("tokenBlackPositron1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tokenWhiteEletron {
             get {
                 object obj = ResourceManager.GetObject("tokenWhiteEletron", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tokenWhiteEletron1 {
+            get {
+                object obj = ResourceManager.GetObject("tokenWhiteEletron1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -109,9 +137,23 @@ namespace AIWar.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tokenWhiteNeutron1 {
+            get {
+                object obj = ResourceManager.GetObject("tokenWhiteNeutron1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tokenWhitePositron {
             get {
                 object obj = ResourceManager.GetObject("tokenWhitePositron", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tokenWhitePositron1 {
+            get {
+                object obj = ResourceManager.GetObject("tokenWhitePositron1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
