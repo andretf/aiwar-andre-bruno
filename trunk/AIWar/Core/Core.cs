@@ -7,7 +7,7 @@ namespace AIWar.Core
 {
     static public class Core
     {
-        static private int[] excludeCasas = {0, 1, 3, 4, 5, 6, 9, 10, 11, 15, 16, 21, 93, 98, 99, 103, 104, 105, 108, 109, 110, 111, 113, 114};
+        static public int[] excludeCasas = {0, 1, 3, 4, 5, 6, 9, 10, 11, 15, 16, 21, 93, 98, 99, 103, 104, 105, 108, 109, 110, 111, 113, 114};
         static private int[] Boundary = { 2, 7, 8, 12, 14, 17, 20, 22, 26, 27, 32, 38, 43, 49, 54, 60, 65, 71, 76, 82, 87, 88, 92, 94, 97, 100, 102, 106, 107, 112 };
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace AIWar.Core
         /// subtrai ou adiciona 11 (5 + 6) ao índice de linha.
         /// </summary>
         /// <returns></returns>
-        static public int[] getVisaoVertical(int[] TabuleiroVetor, int i) {
+        static private int[] getVisaoVertical(int[] TabuleiroVetor, int i) {
             return AddCasa(TabuleiroVetor, i, 11);
         }
 
@@ -56,7 +56,7 @@ namespace AIWar.Core
         /// Diagonal Menor: subtrai ou adiciona 5 ao índice da linha.
         /// </summary>
         /// <returns></returns>
-        static public int[] getVisaoDiagonalMenor(int[] TabuleiroVetor, int i)
+        static private int[] getVisaoDiagonalMenor(int[] TabuleiroVetor, int i)
         {
             return AddCasa(TabuleiroVetor, i, 5);
         }
@@ -65,9 +65,19 @@ namespace AIWar.Core
         /// Diagonal Maior: subtrai ou adiciona 6 ao índice da linha.
         /// </summary>
         /// <returns></returns>
-        static public int[] getVisaoDiagonalMaior(int[] TabuleiroVetor, int i)
+        static private int[] getVisaoDiagonalMaior(int[] TabuleiroVetor, int i)
         {
             return AddCasa(TabuleiroVetor, i, 6);
+        }
+
+        static public int[] getCasasVisiveis(int[] TabuleiroVetor, int i) {
+            List<int> result = new List<int>();
+
+            result.AddRange(getVisaoVertical(TabuleiroVetor, i));
+            result.AddRange(getVisaoDiagonalMenor(TabuleiroVetor, i));
+            result.AddRange(getVisaoDiagonalMaior(TabuleiroVetor, i));
+
+            return result.ToArray();
         }
     }
 }

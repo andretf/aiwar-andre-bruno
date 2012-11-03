@@ -37,10 +37,13 @@ namespace AIWar
 			0, 0, 6, 6, 0, 0,
 			  0, 0, 4, 0, 0
 		};
+        private enum player { PC, humano };
+
 
 		protected int ObjectsSize = 15;
 		private GameObjectCollection Pecas;
-        private int posicaoAtual = 0;
+        private player token_jogador = player.PC;
+        private int token_posicao = 0;
 		#endregion
 
 		#region "Initializers"
@@ -53,29 +56,44 @@ namespace AIWar
 
 		#region "Events"
         private void PecaClick(object sender, EventArgs e){
-            // primeira desmarca tudo
-            clearAllBlink();
+            PictureBox peca = (PictureBox)sender;
+            int position = getIndex(peca);
+
+            if (Core.Core.excludeCasas.Contains(position)){
+                MessageBox.Show("Clique em lugar válido no tabuleiro.");
+                return;
+            }
+
+            // Se tem alguma peca...
+            if (TabuleiroVetor[position] > 0) {
+                // primeira desmarca tudo
+                redesenhaTabuleiro();
+
+                peca.Image = GetBlinkedImage(position);
+
+                // e então marca aquelas no campo de visao
+                foreach (int i in Core.Core.getCasasVisiveis(TabuleiroVetor, position))
+                    getPeca(i).Image = GetBlinkedImage(i);
+            }
+            // Se está vazio
+            else {
+                TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
+                TabuleiroVetor[token_posicao] = 0;
+                redesenhaTabuleiro();
+            }
 
             // marca a peca clicada
-            PictureBox peca = (PictureBox)sender;
-            int position = Convert.ToInt32(peca.Name.Replace("peca", ""));
-            posicaoAtual = position;
-            peca.Image = GetBlinkedImage(position);
-                        
-            // e então marca aquelas no campo de visao
-            foreach(int i in Core.Core.getVisaoDiagonalMaior(TabuleiroVetor, position))
-                getPeca(i).Image = GetBlinkedImage(i);
-            foreach(int i in Core.Core.getVisaoDiagonalMenor(TabuleiroVetor, position))
-                getPeca(i).Image = GetBlinkedImage(i);
-            foreach(int i in Core.Core.getVisaoVertical(TabuleiroVetor, position))
-                getPeca(i).Image = GetBlinkedImage(i);
+            token_posicao = position;
         }
 
         private void PecaHover(object sender, EventArgs e){
             PictureBox peca = (PictureBox)sender;
             peca.Cursor = Cursors.Hand;
 
-
+            // e então marca aquelas no campo de visao
+            redesenhaTabuleiro();
+            foreach (int i in Core.Core.getCasasVisiveis(TabuleiroVetor, getIndex(peca)))
+                getPeca(i).Image = GetBlinkedImage(i);
         }
 
         private void PecaLeave(object sender, EventArgs e){
@@ -89,12 +107,12 @@ namespace AIWar
 		protected bool initGame(){
 			Pecas = new GameObjectCollection();
 
-			if (desenhaPecas())
+            if (criaPecas())
 				return true;
 			return false;
 		}
 
-		protected bool desenhaPecas() {
+		protected bool criaPecas() {
 			for (int i = 0; i < 115; i++) {
 				PictureBox e = new PictureBox();
                 e.Name = "peca" + i.ToString();
@@ -134,6 +152,7 @@ namespace AIWar
 
             return null;
         }
+
         private Bitmap GetImage(int i)
         {
             switch (TabuleiroVetor[i])
@@ -150,12 +169,26 @@ namespace AIWar
 		#endregion
 
         #region "Auxiliar Methods"
+        /// <summary>
+        /// Retorna a Peça que está no índice i.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         private PictureBox getPeca(int i)
         {
             return (PictureBox)this.Controls.Find("peca" + i.ToString(), true).First();
         }
 
-        private bool clearAllBlink()
+        /// <summary>
+        /// Retorna o índice no tabuleiro da peça indicada.
+        /// </summary>
+        /// <param name="peca"></param>
+        /// <returns></returns>
+        private int getIndex(PictureBox peca) {
+            return Convert.ToInt32(peca.Name.Replace("peca", ""));
+        }
+
+        private bool redesenhaTabuleiro()
         {
             for (int i = 0; i < 115; i++)
             {
