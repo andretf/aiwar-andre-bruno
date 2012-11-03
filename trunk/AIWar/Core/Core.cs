@@ -21,13 +21,13 @@ namespace AIWar.Core
         {
             List<int> result = new List<int>();
             
-            for(int ii = i; ii >= 0; ii -= step){
+            for(int ii = i-step; ii >= 0; ii -= step){
                 if (TabuleiroVetor[ii] > 0 || excludeCasas.Contains(ii))
                     break;
                 result.Add(ii);
             }
 
-            for(int ii = i; ii < 115; ii += step){
+            for(int ii = i+step; ii < 115; ii += step){
                 if (TabuleiroVetor[ii] > 0 || excludeCasas.Contains(ii))
                     break;
                 result.Add(ii);
@@ -40,7 +40,7 @@ namespace AIWar.Core
         /// subtrai ou adiciona 11 (5 + 6) ao índice de linha.
         /// </summary>
         /// <returns></returns>
-        int[] getVisaoVertical(int[] TabuleiroVetor, int i) {
+        public int[] getVisaoVertical(int[] TabuleiroVetor, int i) {
             return AddCasa(TabuleiroVetor, i, 11);
         }
 
@@ -48,15 +48,15 @@ namespace AIWar.Core
         /// Diagonal Menor: subtrai ou adiciona 5 ao índice da linha.
         /// </summary>
         /// <returns></returns>
-        int[] getVisaoDiagonalMenor(int[] TabuleiroVetor, int i) {
+        public int[] getVisaoDiagonalMenor(int[] TabuleiroVetor, int i) {
             return AddCasa(TabuleiroVetor, i, 5);
         }
 
         /// <summary>
-        /// Diagonal Maior: subtrai ou adiciona 5 ao índice da linha.
+        /// Diagonal Maior: subtrai ou adiciona 6 ao índice da linha.
         /// </summary>
         /// <returns></returns>
-        int[] getVisaoDiagonalMaior(int[] TabuleiroVetor, int i)
+        public int[] getVisaoDiagonalMaior(int[] TabuleiroVetor, int i)
         {
             return AddCasa(TabuleiroVetor, i, 6);
         }
