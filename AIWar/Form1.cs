@@ -14,6 +14,12 @@ namespace AIWar
 	public partial class Form1 : Form
 	{
 		#region "Properties, Globals"
+        // 1 - Neutron Preto
+        // 2 - Eletron Preto
+        // 3 - Proton Preto
+        // 4 - Neutron Branco
+        // 5 - Eletron Branco
+        // 6 - Proton Branco
 		public int[] TabuleiroVetor = new int[115] {
 			  0, 0, 1, 0, 0, 
 			0, 0, 3, 3, 0, 0,
@@ -38,7 +44,8 @@ namespace AIWar
 			  0, 0, 4, 0, 0
 		};
         private enum player { PC, humano };
-
+        private enum token {neutronPreto, eletronPreto, protonPreto,
+                            neutronBranco, eletronBranco, protonBranco};
 
 		protected int ObjectsSize = 15;
 		private GameObjectCollection Pecas;
@@ -186,6 +193,18 @@ namespace AIWar
         /// <returns></returns>
         private int getIndex(PictureBox peca) {
             return Convert.ToInt32(peca.Name.Replace("peca", ""));
+        }
+
+        /// <summary>
+        /// Retorna a carga de uma particula indicada pelo tipo de peça no tabuleiro.
+        /// </summary>
+        /// <returns></returns>
+        private int getParticulaCarga(int i) {
+            switch (i) {
+                case 1: case 4: return -1;
+                case 2: case 5: return 1;
+            }
+            return 0;
         }
 
         private bool redesenhaTabuleiro()
