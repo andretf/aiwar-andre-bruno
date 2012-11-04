@@ -33,9 +33,9 @@
             this.lblJogada = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -62,9 +62,9 @@
             // lblJogada
             // 
             this.lblJogada.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblJogada.Location = new System.Drawing.Point(447, 13);
+            this.lblJogada.Location = new System.Drawing.Point(447, 11);
             this.lblJogada.Name = "lblJogada";
-            this.lblJogada.Size = new System.Drawing.Size(100, 23);
+            this.lblJogada.Size = new System.Drawing.Size(133, 18);
             this.lblJogada.TabIndex = 4;
             // 
             // button1
@@ -87,15 +87,15 @@
             this.panel2.Size = new System.Drawing.Size(597, 69);
             this.panel2.TabIndex = 6;
             // 
-            // panel3
+            // radioButton2
             // 
-            this.panel3.Controls.Add(this.lblJogada);
-            this.panel3.Controls.Add(this.label1);
-            this.panel3.Controls.Add(this.panel1);
-            this.panel3.Location = new System.Drawing.Point(11, 85);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(597, 429);
-            this.panel3.TabIndex = 7;
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(15, 38);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(65, 17);
+            this.radioButton2.TabIndex = 7;
+            this.radioButton2.Text = "Humano";
+            this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
@@ -109,15 +109,15 @@
             this.radioButton1.Text = "PC";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // panel3
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(15, 38);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(65, 17);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.Text = "Humano";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.panel3.Controls.Add(this.lblJogada);
+            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.panel1);
+            this.panel3.Location = new System.Drawing.Point(11, 85);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(597, 429);
+            this.panel3.TabIndex = 7;
             // 
             // Form1
             // 

@@ -124,7 +124,10 @@ namespace AIWar
                 token_jogador = p2;
             }
             
-            lblJogada.Text = token_jogador.name + " - " + token_jogador.Cor.ToString();
+            lblJogada.Text = token_jogador.name + " - peças " + token_jogador.Cor.ToString() + "s";
+
+            if (token_jogador.Jogador == Enums.pType.PC)
+                JogadaPC();
         }
 
         private void PecaClick(object sender, EventArgs e) {
@@ -202,7 +205,8 @@ namespace AIWar
             }
             else {
                 // Se tem alguma peca...
-                if (TabuleiroVetor[position] > 0) {
+                if (TabuleiroVetor[position] > 0 && JogadaCompleta)
+                {
                     // primeira desmarca tudo
                     redesenhaTabuleiro();
 
@@ -354,7 +358,7 @@ namespace AIWar
                     token_jogador = jogadores.ElementAt(1);
                 else if (token_jogador == jogadores.ElementAt(1))
                     token_jogador = jogadores.ElementAt(0);
-                lblJogada.Text = token_jogador.name + " - " + token_jogador.Cor.ToString();
+                lblJogada.Text = token_jogador.name + " - peças " + token_jogador.Cor.ToString() + "s";
             }
             else {
                 return false;
@@ -487,7 +491,7 @@ namespace AIWar
                         break;
                     }
                 }
-                MessageBox.Show(jogadorVencedor.Jogador.ToString() + " ganhou! (peças bancas)");
+                MessageBox.Show(jogadorVencedor.name + " ganhou! (peças bancas)");
                 JogoEmAndamento = false;
                 return true;
             }
@@ -500,7 +504,7 @@ namespace AIWar
                         break;
                     }
                 }
-                MessageBox.Show(jogadorVencedor.Jogador.ToString() + " ganhou! (peças pretas)");
+                MessageBox.Show(jogadorVencedor.name + " ganhou! (peças pretas)");
                 JogoEmAndamento = false;
                 return true;
             }
