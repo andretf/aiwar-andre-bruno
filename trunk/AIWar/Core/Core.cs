@@ -129,5 +129,5 @@ namespace AIWar.Core
             return result.ToArray();
         }
         #endregion
-    }
+            }
 }
