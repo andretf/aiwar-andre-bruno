@@ -152,12 +152,13 @@ namespace AIWar
                 return;
             }
 
-            if (!JogadaCompleta && DeveCapturar()) {
-                if (!PecaQueCaptura(position)) {
+            if (!JogadaCompleta && DeveCapturar()) {                
+                if (!PecaQueCaptura(token_posicao) || !PecaCapturavel(position, getPecaCor(position))) {
                     MessageBox.Show("A captura é obrigatória.");
+                    JogadaCompleta = true; //deixa trocar a peca comedoura
                     return;
                 }
-                else {
+                else { //se a peca que esta selecionada pode capturar alguma E a peca que foi clicada eh capturavel
                     if (getPecaCor(position) != Enums.pColor.undefined &&
                         getPecaCor(position) != token_jogador.Cor) {
 
