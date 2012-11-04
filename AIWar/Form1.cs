@@ -48,53 +48,53 @@ namespace AIWar
 #region "Events"
         private void button1_Click(object sender, EventArgs e) {
             jogadores = new List<player>();
-            //TabuleiroVetor = new int[137]{
-            //    0, 0, 0, 1, 0, 0, 0,
-            //      0, 0, 3, 3, 0, 0,
-            //    0, 0, 2, 2, 2, 0, 0,
-            //      0, 0, 3, 3, 0, 0,
-            //    0, 0, 0, 2, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 5, 0, 0, 0,
-            //      0, 0, 6, 6, 0, 0,
-            //    0, 0, 5, 5, 5, 0, 0,
-            //      0, 0, 6, 6, 0, 0,
-            //    0, 0, 0, 4, 0, 0, 0 
-            //};
-
             TabuleiroVetor = new int[137]{
                 0, 0, 0, 1, 0, 0, 0,
-                  0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0,
-                  0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0,
-                  0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0,
-                  0, 0, 0, 0, 0, 0,
+                  0, 0, 3, 3, 0, 0,
+                0, 0, 2, 2, 2, 0, 0,
+                  0, 0, 3, 3, 0, 0,
                 0, 0, 0, 2, 0, 0, 0,
                   0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0,
-                0, 5, 0, 0, 0, 0, 0,
-                  0, 0, 0, 0, 0, 6,
-                0, 0, 0, 3, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0,
+                  0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0,
                 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0,
+                0, 0, 0, 5, 0, 0, 0,
+                  0, 0, 6, 6, 0, 0,
+                0, 0, 5, 5, 5, 0, 0,
+                  0, 0, 6, 6, 0, 0,
                 0, 0, 0, 4, 0, 0, 0 
-		    };
+            };
+
+            //TabuleiroVetor = new int[137]{
+            //    0, 0, 0, 1, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 2, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 5, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 6,
+            //    0, 0, 0, 3, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 0, 0, 0, 0,
+            //      0, 0, 0, 0, 0, 0,
+            //    0, 0, 0, 4, 0, 0, 0 
+            //};
 
             token_posicao = 0;
             JogoEmAndamento = true;
@@ -174,7 +174,12 @@ namespace AIWar
                             }
 
                         if (ExecutaJogada(position))
+                        {
                             JogadaCompleta = true;
+                            CheckFinishGame();
+                        }
+                        else
+                            MessageBox.Show("Sem jogadas disponíveis.");
                     }
                     else {
                         if (getPecaCor(position) == Enums.pColor.undefined) {
@@ -220,14 +225,25 @@ namespace AIWar
                         MessageBox.Show("Jogada proibida.");
                         return;
                     }
-                    
+
                     if (ExecutaJogada(position))
+                    {
                         JogadaCompleta = true;
+                        CheckFinishGame();
+                    }
+                    else
+                        MessageBox.Show("Sem jogadas disponíveis.");
                 }
             }
 
             // marca a peca clicada
             token_posicao = position;
+
+            // verifica se eh a vez do PC e joga
+            if (token_jogador.Jogador == Enums.pType.PC)
+            {
+                JogadaPC();
+            }
 
         }
 
@@ -341,15 +357,109 @@ namespace AIWar
                 lblJogada.Text = token_jogador.name + " - " + token_jogador.Cor.ToString();
             }
             else {
-                MessageBox.Show("Sem jogadas disponíveis.");
                 return false;
             }
-
-            CheckFinishGame();
 
             return true;
         }
 
+        private int EscolhePecaPc(Enums.pColor cor)
+        {
+            int[] posicaoPecas = getPecasPosicao(cor);
+            int pecaEscolhida = 0;
+            Random random = new Random();
+            do {
+                pecaEscolhida = posicaoPecas[random.Next(0, posicaoPecas.Length - 1)];
+            } while (Core.Core.getCasasVisiveis(TabuleiroVetor, pecaEscolhida).Length == 0);
+
+            return pecaEscolhida;
+        }
+
+        private int EscolhePecaQueCapturaPc(Enums.pColor cor)
+        {
+            int pecaQueCaptura = 0;
+            if (cor == Enums.pColor.branca)
+            {
+                for (int j = 0; j < MAX_VETOR; j++)
+                {
+                    if (getPecaCor(j) == Enums.pColor.preta)
+                    {
+                        int qtd = 0;
+                        int cargasSoma = 0;
+
+                        foreach (int i in Core.Core.getPecasVisiveis(TabuleiroVetor, j))
+                        {
+                            cargasSoma += getParticulaCarga(i);
+                            if (getPecaCor(i) == Enums.pColor.branca) qtd++;
+                        }
+
+                        if ((qtd > 1) && (cargasSoma == 0))
+                            pecaQueCaptura = Core.Core.getPecasVisiveis(TabuleiroVetor, j)[0];
+                    }
+                }
+            }
+            else if (cor == Enums.pColor.preta)
+            {
+                for (int j = 0; j < MAX_VETOR; j++)
+                {
+                    if (getPecaCor(j) == Enums.pColor.branca)
+                    {
+                        int qtd = 0;
+                        int cargasSoma = 0;
+
+                        foreach (int i in Core.Core.getPecasVisiveis(TabuleiroVetor, j))
+                        {
+                            cargasSoma += getParticulaCarga(i);
+                            if (getPecaCor(i) == Enums.pColor.preta) qtd++;
+                        }
+                        if ((qtd > 1) && (cargasSoma == 0))
+                            pecaQueCaptura = Core.Core.getPecasVisiveis(TabuleiroVetor, j)[0];
+                    }
+                }
+            }
+
+            return pecaQueCaptura;
+        }
+
+        private void JogadaPC()
+        {
+            if (JogoEmAndamento)
+            {
+                int position = 0;
+
+                if (DeveCapturar())
+                {
+                    token_posicao = EscolhePecaQueCapturaPc(token_jogador.Cor);
+                    foreach (int peca in Core.Core.getPecasVisiveis(TabuleiroVetor, token_posicao))
+                    {
+                        if (PecaCapturavel(peca, getPecaCor(peca)))
+                        {
+                            position = peca;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    token_posicao = EscolhePecaPc(token_jogador.Cor);
+                    foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
+                    {
+                        //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
+                        position = peca; //no momento pega a ultima casa avaliada
+                    }
+                }
+
+                //move-come a peca
+                TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
+                TabuleiroVetor[token_posicao] = 0;
+                redesenhaTabuleiro();
+
+                if (ExecutaJogada(position) && token_jogador.Jogador == Enums.pType.PC)
+                    JogadaPC();
+
+                JogadaCompleta = true;
+            }
+        }
 
         private bool CheckFinishGame() {
             int[] pretas = new int[3] {0,0,0};
@@ -366,13 +476,31 @@ namespace AIWar
                 }
             }
 
+            player jogadorVencedor = new player();
+
             if (pretas[0] == 0 || pretas[1] == 0 || pretas[2] == 0) {
-                MessageBox.Show("Jogador de peças brancas ganhou!");
+                foreach (player jogador in jogadores)
+                {
+                    if (jogador.Cor == Enums.pColor.branca)
+                    {
+                        jogadorVencedor = jogador;
+                        break;
+                    }
+                }
+                MessageBox.Show(jogadorVencedor.Jogador.ToString() + " ganhou! (peças bancas)");
                 JogoEmAndamento = false;
                 return true;
             }
             else if (brancas[0] == 0 || brancas[1] == 0 || brancas[2] == 0) {
-                MessageBox.Show("Jogador de peças pretas ganhou!");
+                foreach (player jogador in jogadores)
+                {
+                    if (jogador.Cor == Enums.pColor.preta)
+                    {
+                        jogadorVencedor = jogador;
+                        break;
+                    }
+                }
+                MessageBox.Show(jogadorVencedor.Jogador.ToString() + " ganhou! (peças pretas)");
                 JogoEmAndamento = false;
                 return true;
             }
@@ -508,6 +636,25 @@ namespace AIWar
             }
 
             return lista;
+        }
+
+        /// <summary>
+        /// Retorna a posição das peças de uma determinada cor existentes no tabuleiro.
+        /// </summary>
+        /// <param name="tabuleiroVetor">Tabuleiro.</param>
+        /// <param name="cor">Cor das peças que se deseja.</param>
+        /// <returns></returns>
+        private int[] getPecasPosicao(Enums.pColor cor)
+        {
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < MAX_VETOR; i++)
+            {
+                if (getPecaCor(i) == cor)
+                    result.Add(i);
+            }
+
+            return result.ToArray();
         }
     #endregion
     }
