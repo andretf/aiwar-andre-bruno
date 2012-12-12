@@ -36,6 +36,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.listBoxUltimasJogadas = new System.Windows.Forms.ListBox();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -111,6 +112,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.listBoxUltimasJogadas);
             this.panel3.Controls.Add(this.lblJogada);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.panel1);
@@ -118,6 +120,14 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(597, 429);
             this.panel3.TabIndex = 7;
+            // 
+            // listBoxUltimasJogadas
+            // 
+            this.listBoxUltimasJogadas.FormattingEnabled = true;
+            this.listBoxUltimasJogadas.Location = new System.Drawing.Point(399, 64);
+            this.listBoxUltimasJogadas.Name = "listBoxUltimasJogadas";
+            this.listBoxUltimasJogadas.Size = new System.Drawing.Size(181, 329);
+            this.listBoxUltimasJogadas.TabIndex = 5;
             // 
             // Form1
             // 
@@ -146,6 +156,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ListBox listBoxUltimasJogadas;
     }
 }
 
