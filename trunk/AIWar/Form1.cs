@@ -173,6 +173,7 @@ namespace AIWar
 
                     if (PreparaProxJogada(position)) {
                         JogadaCompleta = true;
+                        listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
                         CheckFinishGame();
                     }
                     else
@@ -435,7 +436,9 @@ namespace AIWar
                 TabuleiroVetor[token_posicao] = 0;
                 redesenhaTabuleiro();
 
+                listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
                 CheckFinishGame();
+
 
                 if (PreparaProxJogada(position) && token_jogador.Jogador == Enums.pType.PC)
                     JogadaPC();
