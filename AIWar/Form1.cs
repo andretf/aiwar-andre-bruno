@@ -174,6 +174,7 @@ namespace AIWar
                     if (PreparaProxJogada(position)) {
                         JogadaCompleta = true;
                         listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
+                        RemovePecasCapturadas();
                         CheckFinishGame();
                     }
                     else
@@ -383,41 +384,41 @@ namespace AIWar
                 do
                 {
                     qtdTentativasJogadas++;
-                    // jogada de DEFESA
-                    if (PecasEmRisco(token_jogador.Cor))
-                    {
-                        token_posicao = PecaEmRisco(token_jogador.Cor);
-                        position = PosicaoSegura(token_posicao);
-                        jogadaOk = true;
-                    }
-                    // jogada de ATAQUE
-                    else {
-                        // se tem como dar uma jogada e na próxima comer uma peça do adversário
-                        if (PecaAdversarioCercado(token_jogador.Cor))
-                        {
-                            position = PecaCercavel(token_jogador.Cor);
-                            jogadaOk = true;
-                        }
-                        else // jogada de ATAQUE CAUTELOSA
-                        {
-                            token_posicao = EscolhePecaPc(token_jogador.Cor);
+                    //// jogada de DEFESA
+                    //if (PecasEmRisco(token_jogador.Cor)) //TODO REVER PECAS EM RISCO
+                    //{
+                    //    token_posicao = PecaEmRisco(token_jogador.Cor);
+                    //    position = PosicaoSegura(token_posicao);
+                    //    jogadaOk = true;
+                    //}
+                    //// jogada de ATAQUE
+                    //else {
+                    //    // se tem como dar uma jogada e na próxima comer uma peça do adversário
+                    //    if (PecaAdversarioCercado(token_jogador.Cor))
+                    //    {
+                    //        position = PecaCercavel(token_jogador.Cor);
+                    //        jogadaOk = true;
+                    //    }
+                    //    else // jogada de ATAQUE CAUTELOSA
+                    //    {
+                    //        token_posicao = EscolhePecaPc(token_jogador.Cor);
 
-                            //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
-                            foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
-                                position = peca; //no momento pega a ultima casa avaliada
+                    //        //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
+                    //        foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
+                    //            position = peca; //no momento pega a ultima casa avaliada
 
-                            int pecaOldPosition = TabuleiroVetor[position];
-                            int pecaOldTokenPosicao = TabuleiroVetor[token_posicao];
-                            TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
-                            TabuleiroVetor[token_posicao] = 0;
+                    //        int pecaOldPosition = TabuleiroVetor[position];
+                    //        int pecaOldTokenPosicao = TabuleiroVetor[token_posicao];
+                    //        TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
+                    //        TabuleiroVetor[token_posicao] = 0;
 
-                            if (!PecasEmRisco(token_jogador.Cor))
-                                jogadaOk = true;
+                    //        if (!PecasEmRisco(token_jogador.Cor))
+                    //            jogadaOk = true;
 
-                            TabuleiroVetor[position] = pecaOldPosition;
-                            TabuleiroVetor[token_posicao] = pecaOldTokenPosicao;
-                        }
-                    }
+                    //        TabuleiroVetor[position] = pecaOldPosition;
+                    //        TabuleiroVetor[token_posicao] = pecaOldTokenPosicao;
+                    //    }
+                    //}
 
                     // qualquer jogada...
                     if (!jogadaOk && qtdTentativasJogadas > 100){
@@ -431,12 +432,13 @@ namespace AIWar
 
                 } while (!jogadaOk);
 
-                //move-come a peca
+                //move a peca
                 TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
                 TabuleiroVetor[token_posicao] = 0;
                 redesenhaTabuleiro();
 
                 listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
+                RemovePecasCapturadas();
                 CheckFinishGame();
 
 
@@ -444,6 +446,29 @@ namespace AIWar
                     JogadaPC();
 
                 JogadaCompleta = true;
+            }
+        }
+
+        private void RemovePecasCapturadas()
+        {
+            List<int> IndicesPecasRemovidas = new List<int>();
+            foreach (int indicePeca in getPecasPosicao(Enums.pColor.branca))
+            {
+                if (PecaCapturavel(indicePeca, Enums.pColor.branca))
+                    IndicesPecasRemovidas.Add(indicePeca);
+            }
+            foreach (int indicePeca in getPecasPosicao(Enums.pColor.preta))
+            {
+                if (PecaCapturavel(indicePeca, Enums.pColor.preta))
+                    IndicesPecasRemovidas.Add(indicePeca);
+            }
+            if (IndicesPecasRemovidas.Count > 0)
+            {
+                foreach (int IndicePeca in IndicesPecasRemovidas)
+                {
+                    listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(IndicePeca).ToString() + " capturada: " + IndicePeca.ToString());
+                    TabuleiroVetor[IndicePeca] = 0;
+                }
             }
         }
         
