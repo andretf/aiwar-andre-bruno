@@ -126,6 +126,8 @@ namespace AIWar
             
             lblJogada.Text = token_jogador.name + " - peças " + token_jogador.Cor.ToString() + "s";
 
+            listBoxUltimasJogadas.Items.Clear();
+
             if (token_jogador.Jogador == Enums.pType.PC)
                 JogadaPC();
         }
@@ -469,6 +471,7 @@ namespace AIWar
                     listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(IndicePeca).ToString() + " capturada: " + IndicePeca.ToString());
                     TabuleiroVetor[IndicePeca] = 0;
                 }
+                redesenhaTabuleiro();
             }
         }
         
