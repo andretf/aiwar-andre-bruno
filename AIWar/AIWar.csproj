@@ -65,6 +65,7 @@
     <Compile Include="Core\Enums.cs" />
     <Compile Include="Core\GameObjectCollection.cs" />
     <Compile Include="Core\GameObject.cs" />
+    <Compile Include="Core\Nodo.cs" />
     <Compile Include="Core\player.cs" />
     <Compile Include="Core\Positions.cs" />
     <Compile Include="Form1.cs">

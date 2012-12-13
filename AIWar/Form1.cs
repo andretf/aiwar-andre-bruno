@@ -34,6 +34,9 @@ namespace AIWar
         private List<player> jogadores;
         private bool JogoEmAndamento = false;
         private bool JogadaCompleta = true;
+
+        private Nodo ArvoreDecisao;
+
         const int MAX_VETOR = 137;
 		#endregion
 
@@ -72,30 +75,6 @@ namespace AIWar
                 0, 0, 0, 4, 0, 0, 0 
             };
 
-            //TabuleiroVetor = new int[137]{
-            //    0, 0, 0, 1, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 2, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 5, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 6,
-            //    0, 0, 0, 3, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 0, 0, 0, 0,
-            //      0, 0, 0, 0, 0, 0,
-            //    0, 0, 0, 4, 0, 0, 0 
-            //};
-
             token_posicao = 0;
             JogoEmAndamento = true;
 
@@ -127,6 +106,9 @@ namespace AIWar
             lblJogada.Text = token_jogador.name + " - peças " + token_jogador.Cor.ToString() + "s";
 
             listBoxUltimasJogadas.Items.Clear();
+
+            ArvoreDecisao = new Nodo(TabuleiroVetor);
+            ArvoreDecisao.filhos = Core.Core.addNodosArvore(ArvoreDecisao, token_jogador.Cor);
 
             if (token_jogador.Jogador == Enums.pType.PC)
                 JogadaPC();
