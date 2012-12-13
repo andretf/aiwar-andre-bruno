@@ -398,21 +398,6 @@ namespace AIWar
                     ArvoreDecisao = new Nodo(TabuleiroVetor);
                     ArvoreDecisao.filhos = Core.Core.addNodosArvore(ArvoreDecisao, token_jogador.Cor);
 
-                            static public int Negamax(Nodo node, int depth, int alfa, int beta) {
-            if (node.filhos.Length == 0 || depth == 0)
-                return node.sumCapturadas;
-
-            foreach (Nodo filho in node.filhos) {
-                int val = -Negamax(filho, depth - 1, -beta, -alfa);
-
-                // Alfa-beta corte
-                if (val >= beta)
-                    return val;
-                if (val >= alfa)
-                    return val;
-            }
-            return alfa;
-        }
 
 
                     //move a peca
