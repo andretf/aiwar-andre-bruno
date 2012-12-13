@@ -380,42 +380,7 @@ namespace AIWar
                     do
                     {
                         qtdTentativasJogadas++;
-                        //// jogada de DEFESA
-                        //if (PecasEmRisco(token_jogador.Cor)) //TODO REVER PECAS EM RISCO
-                        //{
-                        //    token_posicao = PecaEmRisco(token_jogador.Cor);
-                        //    position = PosicaoSegura(token_posicao);
-                        //    jogadaOk = true;
-                        //}
-                        //// jogada de ATAQUE
-                        //else {
-                        //    // se tem como dar uma jogada e na próxima comer uma peça do adversário
-                        //    if (PecaAdversarioCercado(token_jogador.Cor))
-                        //    {
-                        //        position = PecaCercavel(token_jogador.Cor);
-                        //        jogadaOk = true;
-                        //    }
-                        //    else // jogada de ATAQUE CAUTELOSA
-                        //    {
-                        //        token_posicao = EscolhePecaPc(token_jogador.Cor);
-
-                        //        //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
-                        //        foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
-                        //            position = peca; //no momento pega a ultima casa avaliada
-
-                        //        int pecaOldPosition = TabuleiroVetor[position];
-                        //        int pecaOldTokenPosicao = TabuleiroVetor[token_posicao];
-                        //        TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
-                        //        TabuleiroVetor[token_posicao] = 0;
-
-                        //        if (!PecasEmRisco(token_jogador.Cor))
-                        //            jogadaOk = true;
-
-                        //        TabuleiroVetor[position] = pecaOldPosition;
-                        //        TabuleiroVetor[token_posicao] = pecaOldTokenPosicao;
-                        //    }
-                        //}
-
+                        
                         // qualquer jogada...
                         if (!jogadaOk && qtdTentativasJogadas > 100)
                         {
@@ -429,6 +394,26 @@ namespace AIWar
                         }
 
                     } while (!jogadaOk);
+
+                    ArvoreDecisao = new Nodo(TabuleiroVetor);
+                    ArvoreDecisao.filhos = Core.Core.addNodosArvore(ArvoreDecisao, token_jogador.Cor);
+
+                            static public int Negamax(Nodo node, int depth, int alfa, int beta) {
+            if (node.filhos.Length == 0 || depth == 0)
+                return node.sumCapturadas;
+
+            foreach (Nodo filho in node.filhos) {
+                int val = -Negamax(filho, depth - 1, -beta, -alfa);
+
+                // Alfa-beta corte
+                if (val >= beta)
+                    return val;
+                if (val >= alfa)
+                    return val;
+            }
+            return alfa;
+        }
+
 
                     //move a peca
                     TabuleiroVetor[position] = TabuleiroVetor[token_posicao];

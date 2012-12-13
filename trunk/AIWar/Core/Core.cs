@@ -165,35 +165,21 @@ namespace AIWar.Core
             return result.ToArray();
         }
 
-        //        ROTINA negamax(nó, profundidade)
-        //    SE nó é um nó terminal OU profundidade = 0 ENTÃO
-        //        RETORNE o valor da heurística do nó
-        //    SENÃO
-        //        alfa ← -∞                       { a avaliação é idêntica para ambos os jogadores }
-        //        PARA CADA filho DE nó
-        //            alfa ← max(alfa, -negamax(filho, profundidade-1))
-        //        FIM PARA
-        //        RETORNE alfa
-        //    FIM SE
-        //FIM ROTINA
-
-        static public int Negamax(Nodo node, int depth, int alfa, int beta){
-            if(node.filhos.Length == 0 || depth == 0){
+        static public int Negamax(Nodo node, int depth, int alfa, int beta) {
+            if (node.filhos.Length == 0 || depth == 0)
                 return node.sumCapturadas;
-            }
-            else{
-        //        foreach child in node.Childs{
-        //            val = -negamax(child, depth-1, -beta, -alfa, -color);
 
-        //            // Alfa-beta corte
-        //            if (val >= beta)
-        //                return val;
-        //            if (val >= alfa)
-        //                alfa = val;
-        //        }
-        //        return alfa;
+            foreach (Nodo filho in node.filhos) {
+                int val = -Negamax(filho, depth - 1, -beta, -alfa);
+
+                // Alfa-beta corte
+                if (val >= beta)
+                    return val;
+                if (val >= alfa)
+                    return val;
             }
-            return 0;
+            return alfa;
         }
+
     }
 }
