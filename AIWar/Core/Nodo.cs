@@ -25,7 +25,7 @@ namespace AIWar.Core {
             estadoTabuleiro[to] = peca;
             
             // se desencadear capturas do rival, -- o Saldo
-            Enums.pColor cor = getPecaCor(from);
+            Enums.pColor cor = getPecaCor(to);
             foreach (int i in Core.getPecasPosicao(estadoTabuleiro, cor)) {
                 if (PecaCapturavel(i, cor)) {
                     if(i == to) estadoTabuleiro[to] = 0;
