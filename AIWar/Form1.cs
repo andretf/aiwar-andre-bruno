@@ -176,7 +176,7 @@ namespace AIWar
                     if (PreparaProxJogada(position)) {
                         JogadaCompleta = true;
                         listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
-                        RemovePecasCapturadas();
+                        RemovePecasCapturadas(getPecaCor(position));
                         CheckFinishGame();
                     }
                     else
@@ -440,7 +440,7 @@ namespace AIWar
                 redesenhaTabuleiro();
 
                 listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
-                RemovePecasCapturadas();
+                RemovePecasCapturadas(getPecaCor(position));
                 CheckFinishGame();
 
 
@@ -451,24 +451,26 @@ namespace AIWar
             }
         }
 
-        private void RemovePecasCapturadas()
+        private void RemovePecasCapturadas(Enums.pColor Cor)
         {
             List<int> IndicesPecasRemovidas = new List<int>();
-            foreach (int indicePeca in getPecasPosicao(Enums.pColor.branca))
+            Enums.pColor CorAdversario = Enums.pColor.undefined;
+            
+            if (Cor == Enums.pColor.branca)
+                CorAdversario = Enums.pColor.branca;
+            else
+                CorAdversario = Enums.pColor.preta;
+
+            foreach (int indicePeca in getPecasPosicao(CorAdversario))
             {
-                if (PecaCapturavel(indicePeca, Enums.pColor.branca))
+                if (PecaCapturavel(indicePeca, CorAdversario))
                     IndicesPecasRemovidas.Add(indicePeca);
-            }
-            foreach (int indicePeca in getPecasPosicao(Enums.pColor.preta))
-            {
-                if (PecaCapturavel(indicePeca, Enums.pColor.preta))
-                    IndicesPecasRemovidas.Add(indicePeca);
-            }
+            }            
             if (IndicesPecasRemovidas.Count > 0)
             {
                 foreach (int IndicePeca in IndicesPecasRemovidas)
                 {
-                    listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(IndicePeca).ToString() + " capturada: " + IndicePeca.ToString());
+                    listBoxUltimasJogadas.Items.Add("peca " + CorAdversario.ToString() + " capturada: " + IndicePeca.ToString());
                     TabuleiroVetor[IndicePeca] = 0;
                 }
                 redesenhaTabuleiro();
