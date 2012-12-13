@@ -385,61 +385,73 @@ namespace AIWar
                 int position = 0;
                 bool jogadaOk = false;
                 int qtdTentativasJogadas = 0;
+                int indicePositionCapturaObrigatoria = 0;
+                
+                if (CapturaObrigatoria(token_jogador.Cor))
+                    indicePositionCapturaObrigatoria = RealizaCapturaObrigatoria(token_jogador.Cor);
 
-                do
+                //Verifica se é obrigado a capturar alguma peça e tem como realizar a captura
+                if (indicePositionCapturaObrigatoria != 0)                    
+                    position = indicePositionCapturaObrigatoria;
+                else
                 {
-                    qtdTentativasJogadas++;
-                    //// jogada de DEFESA
-                    //if (PecasEmRisco(token_jogador.Cor)) //TODO REVER PECAS EM RISCO
-                    //{
-                    //    token_posicao = PecaEmRisco(token_jogador.Cor);
-                    //    position = PosicaoSegura(token_posicao);
-                    //    jogadaOk = true;
-                    //}
-                    //// jogada de ATAQUE
-                    //else {
-                    //    // se tem como dar uma jogada e na próxima comer uma peça do adversário
-                    //    if (PecaAdversarioCercado(token_jogador.Cor))
-                    //    {
-                    //        position = PecaCercavel(token_jogador.Cor);
-                    //        jogadaOk = true;
-                    //    }
-                    //    else // jogada de ATAQUE CAUTELOSA
-                    //    {
-                    //        token_posicao = EscolhePecaPc(token_jogador.Cor);
+                    do
+                    {
+                        qtdTentativasJogadas++;
+                        //// jogada de DEFESA
+                        //if (PecasEmRisco(token_jogador.Cor)) //TODO REVER PECAS EM RISCO
+                        //{
+                        //    token_posicao = PecaEmRisco(token_jogador.Cor);
+                        //    position = PosicaoSegura(token_posicao);
+                        //    jogadaOk = true;
+                        //}
+                        //// jogada de ATAQUE
+                        //else {
+                        //    // se tem como dar uma jogada e na próxima comer uma peça do adversário
+                        //    if (PecaAdversarioCercado(token_jogador.Cor))
+                        //    {
+                        //        position = PecaCercavel(token_jogador.Cor);
+                        //        jogadaOk = true;
+                        //    }
+                        //    else // jogada de ATAQUE CAUTELOSA
+                        //    {
+                        //        token_posicao = EscolhePecaPc(token_jogador.Cor);
 
-                    //        //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
-                    //        foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
-                    //            position = peca; //no momento pega a ultima casa avaliada
+                        //        //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
+                        //        foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
+                        //            position = peca; //no momento pega a ultima casa avaliada
 
-                    //        int pecaOldPosition = TabuleiroVetor[position];
-                    //        int pecaOldTokenPosicao = TabuleiroVetor[token_posicao];
-                    //        TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
-                    //        TabuleiroVetor[token_posicao] = 0;
+                        //        int pecaOldPosition = TabuleiroVetor[position];
+                        //        int pecaOldTokenPosicao = TabuleiroVetor[token_posicao];
+                        //        TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
+                        //        TabuleiroVetor[token_posicao] = 0;
 
-                    //        if (!PecasEmRisco(token_jogador.Cor))
-                    //            jogadaOk = true;
+                        //        if (!PecasEmRisco(token_jogador.Cor))
+                        //            jogadaOk = true;
 
-                    //        TabuleiroVetor[position] = pecaOldPosition;
-                    //        TabuleiroVetor[token_posicao] = pecaOldTokenPosicao;
-                    //    }
-                    //}
+                        //        TabuleiroVetor[position] = pecaOldPosition;
+                        //        TabuleiroVetor[token_posicao] = pecaOldTokenPosicao;
+                        //    }
+                        //}
 
-                    // qualquer jogada...
-                    if (!jogadaOk && qtdTentativasJogadas > 100){
-                        token_posicao = EscolhePecaPc(token_jogador.Cor);
-                        foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao)){
-                            //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
-                            position = peca; //no momento pega a ultima casa avaliada
+                        // qualquer jogada...
+                        if (!jogadaOk && qtdTentativasJogadas > 100)
+                        {
+                            token_posicao = EscolhePecaPc(token_jogador.Cor);
+                            foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
+                            {
+                                //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
+                                position = peca; //no momento pega a ultima casa avaliada
+                            }
+                            jogadaOk = true;
                         }
-                        jogadaOk = true;
-                    }
 
-                } while (!jogadaOk);
+                    } while (!jogadaOk);
 
-                //move a peca
-                TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
-                TabuleiroVetor[token_posicao] = 0;
+                    //move a peca
+                    TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
+                    TabuleiroVetor[token_posicao] = 0;
+                }
                 redesenhaTabuleiro();
 
                 listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
@@ -456,15 +468,76 @@ namespace AIWar
             }
         }
 
+        private Boolean CapturaObrigatoria(Enums.pColor Cor)
+        {
+            Enums.pColor CorAdversario = Enums.pColor.undefined;
+
+            if (Cor == Enums.pColor.branca)
+                CorAdversario = Enums.pColor.preta;
+            else
+                CorAdversario = Enums.pColor.branca;
+
+            foreach (int indicePeca in getPecasPosicao(CorAdversario))
+            {
+                if (PecaCapturavel(indicePeca, CorAdversario))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private int RealizaCapturaObrigatoria(Enums.pColor Cor)
+        {
+            Enums.pColor CorAdversario = Enums.pColor.undefined;
+
+            if (Cor == Enums.pColor.branca)
+                CorAdversario = Enums.pColor.preta;
+            else
+                CorAdversario = Enums.pColor.branca;
+
+            foreach (int indicePeca in getPecasPosicao(CorAdversario))
+            {
+                if (PecaCapturavel(indicePeca, CorAdversario))
+                {
+                    foreach (int indicePecaCaptura in getPecasPosicao(Cor))
+                    {
+                        if (ExisteCasaComum(indicePeca, indicePecaCaptura))
+                        {
+                            foreach (int casaComum in CasasComuns(indicePeca, indicePecaCaptura))
+                            {
+                                int indicePecaCapturaAntiga = indicePecaCaptura;
+
+                                TabuleiroVetor[casaComum] = TabuleiroVetor[indicePecaCapturaAntiga];
+                                TabuleiroVetor[indicePecaCapturaAntiga] = 0;
+
+                                if (PecaCapturavel(indicePeca, CorAdversario))
+                                {
+                                    token_posicao = indicePecaCapturaAntiga;
+                                    return casaComum;
+                                }
+                                else
+                                {
+                                    TabuleiroVetor[indicePecaCapturaAntiga] = TabuleiroVetor[casaComum];
+                                    TabuleiroVetor[casaComum] = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return 0;
+        }
+
         private void RemovePecasCapturadas(Enums.pColor Cor)
         {
             List<int> IndicesPecasRemovidas = new List<int>();
             Enums.pColor CorAdversario = Enums.pColor.undefined;
             
             if (Cor == Enums.pColor.branca)
-                CorAdversario = Enums.pColor.branca;
-            else
                 CorAdversario = Enums.pColor.preta;
+            else
+                CorAdversario = Enums.pColor.branca;
 
             foreach (int indicePeca in getPecasPosicao(CorAdversario))
             {
@@ -566,6 +639,16 @@ namespace AIWar
                     if (casasVisiveisPeca == casasVisiveisPecaQuePodeCercar)
                         return casasVisiveisPeca;
             return 0;
+        }
+
+        private List<int> CasasComuns(int peca, int pecaQuePodeCercar)
+        {
+            List<int> casasEmComum = new List<int>();
+            foreach (int casasVisiveisPeca in Core.Core.getCasasVisiveis(TabuleiroVetor, peca))
+                foreach (int casasVisiveisPecaQuePodeCercar in Core.Core.getCasasVisiveis(TabuleiroVetor, pecaQuePodeCercar))
+                    if (casasVisiveisPeca == casasVisiveisPecaQuePodeCercar)
+                        casasEmComum.Add(casasVisiveisPeca);
+            return casasEmComum;
         }
 
         private bool PecaCapturavelComMaisUmMovimento(int peca)
