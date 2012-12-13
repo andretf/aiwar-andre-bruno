@@ -175,7 +175,10 @@ namespace AIWar
 
                     if (PreparaProxJogada(position)) {
                         JogadaCompleta = true;
+                        
                         listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
+                        ScrollHistoryToTheEnd();
+
                         RemovePecasCapturadas(getPecaCor(position));
                         CheckFinishGame();
                     }
@@ -440,6 +443,8 @@ namespace AIWar
                 redesenhaTabuleiro();
 
                 listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
+                ScrollHistoryToTheEnd();
+
                 RemovePecasCapturadas(getPecaCor(position));
                 CheckFinishGame();
 
@@ -471,6 +476,7 @@ namespace AIWar
                 foreach (int IndicePeca in IndicesPecasRemovidas)
                 {
                     listBoxUltimasJogadas.Items.Add("peca " + CorAdversario.ToString() + " capturada: " + IndicePeca.ToString());
+                    ScrollHistoryToTheEnd();
                     TabuleiroVetor[IndicePeca] = 0;
                 }
                 redesenhaTabuleiro();
@@ -789,5 +795,12 @@ namespace AIWar
             return result.ToArray();
         }
     #endregion
+
+#region "UI Methods"
+        private void ScrollHistoryToTheEnd() {
+            int visibleItems = listBoxUltimasJogadas.ClientSize.Height / listBoxUltimasJogadas.ItemHeight;
+            listBoxUltimasJogadas.TopIndex = Math.Max(listBoxUltimasJogadas.Items.Count - visibleItems + 1, 0);
+        }
+#endregion
     }
 }
