@@ -398,7 +398,18 @@ namespace AIWar
                     ArvoreDecisao = new Nodo(TabuleiroVetor);
                     ArvoreDecisao.filhos = Core.Core.addNodosArvore(ArvoreDecisao, token_jogador.Cor);
 
-
+                    int iBest = position;
+                    int bestCount = 0;
+                    foreach (Nodo filho in ArvoreDecisao.filhos) {
+                        if (filho.MovePara > 0) {
+                            int minmaxNodo = Core.Core.Negamax(filho, 1, 0, 10, 15);
+                            if (minmaxNodo > bestCount) {
+                                bestCount = minmaxNodo;
+                                iBest = filho.MovePara;
+                            }
+                        }
+                    }
+                    position = iBest;
 
                     //move a peca
                     TabuleiroVetor[position] = TabuleiroVetor[token_posicao];

@@ -130,6 +130,24 @@ namespace AIWar.Core
         }
         #endregion
 
+
+        /// <summary>
+        /// Retorna a posição das peças de uma determinada cor existentes no tabuleiro.
+        /// </summary>
+        /// <param name="tabuleiroVetor">Tabuleiro.</param>
+        /// <param name="cor">Cor das peças que se deseja.</param>
+        /// <returns></returns>
+        static public int[] getPecasPosicao(int[] tabuleiro, Enums.pColor cor) {
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < MAX_VETOR; i++) {
+                if (getPecaCor(tabuleiro[i]) == cor)
+                    result.Add(i);
+            }
+
+            return result.ToArray();
+        }
+
         static public Enums.pColor getPecaCor(int i) {
             switch (i) {
                 case 1:
@@ -156,8 +174,7 @@ namespace AIWar.Core
                         result.Add(new Nodo(ArvoreNodo.estadoTabuleiro,
                                             ArvoreNodo.estadoTabuleiro[i],
                                             i,
-                                            casa,
-                                            ArvoreNodo.sumCapturadas));
+                                            casa));
                     }
                 }
             }
@@ -165,12 +182,10 @@ namespace AIWar.Core
             return result.ToArray();
         }
 
-        static public int Negamax(Nodo node, int depth, int alfa, int beta) {
-            if (node.filhos.Length == 0 || depth == 0)
-                return node.sumCapturadas;
-
+        static public int Negamax(Nodo node, int depth, int alfa, int beta, int saldo) {
             foreach (Nodo filho in node.filhos) {
-                int val = -Negamax(filho, depth - 1, -beta, -alfa);
+                saldo = filho.CapturaBalance - saldo;
+                int val = - Negamax(filho, depth - 1, -beta, -alfa, saldo) - saldo;
 
                 // Alfa-beta corte
                 if (val >= beta)
@@ -178,6 +193,10 @@ namespace AIWar.Core
                 if (val >= alfa)
                     return val;
             }
+
+            if (node.filhos.Length == 0 || depth == 0)
+                return node.CapturaBalance - saldo;
+            
             return alfa;
         }
 
