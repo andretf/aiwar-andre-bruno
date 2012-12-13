@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace AIWar.Core {
-    static class Enums {
+    public class Enums {
         public enum pColor { branca, preta, undefined };
         public enum pType { PC, humano };
     }

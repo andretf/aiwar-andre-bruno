@@ -129,5 +129,71 @@ namespace AIWar.Core
             return result.ToArray();
         }
         #endregion
+
+        static public Enums.pColor getPecaCor(int i) {
+            switch (i) {
+                case 1:
+                case 2:
+                case 3:
+                    return Enums.pColor.preta;
+                case 4:
+                case 5:
+                case 6:
+                    return Enums.pColor.branca;
             }
+            return Enums.pColor.undefined;
+        }
+
+        static public Nodo[] addNodosArvore(Nodo ArvoreNodo, Enums.pColor cor) {
+            List<Nodo> result = new List<Nodo>();
+
+            for (int i = 0; i < 137; i++){
+                // Se é uma peça da mesma cor
+                if (getPecaCor(ArvoreNodo.estadoTabuleiro[i]) == cor) {
+                    // e ela tem pra onde ir
+                    // então cria o nodo pra cada uma das possiveis jogadas
+                    foreach(int casa in getCasasVisiveis(ArvoreNodo.estadoTabuleiro, i)) {
+                        result.Add(new Nodo(ArvoreNodo.estadoTabuleiro,
+                                            ArvoreNodo.estadoTabuleiro[i],
+                                            i,
+                                            casa,
+                                            ArvoreNodo.sumCapturadas));
+                    }
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        //        ROTINA negamax(nó, profundidade)
+        //    SE nó é um nó terminal OU profundidade = 0 ENTÃO
+        //        RETORNE o valor da heurística do nó
+        //    SENÃO
+        //        alfa ← -∞                       { a avaliação é idêntica para ambos os jogadores }
+        //        PARA CADA filho DE nó
+        //            alfa ← max(alfa, -negamax(filho, profundidade-1))
+        //        FIM PARA
+        //        RETORNE alfa
+        //    FIM SE
+        //FIM ROTINA
+
+        static public int Negamax(Nodo node, int depth, int alfa, int beta){
+            if(node.filhos.Length == 0 || depth == 0){
+                return node.sumCapturadas;
+            }
+            else{
+        //        foreach child in node.Childs{
+        //            val = -negamax(child, depth-1, -beta, -alfa, -color);
+
+        //            // Alfa-beta corte
+        //            if (val >= beta)
+        //                return val;
+        //            if (val >= alfa)
+        //                alfa = val;
+        //        }
+        //        return alfa;
+            }
+            return 0;
+        }
+    }
 }
