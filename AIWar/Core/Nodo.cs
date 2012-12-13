@@ -2,31 +2,50 @@
 namespace AIWar.Core {
     public class Nodo {
         public int[] estadoTabuleiro;
-        public int sumCapturadas;
+        public int CapturaBalance;
+        public int MoveDe;
+        public int MovePara;
         public Nodo[] filhos;
 
         public Nodo(int[] tabuleiroAnterior) {
             estadoTabuleiro = new int[137];
             tabuleiroAnterior.CopyTo(estadoTabuleiro, 0);
             filhos = new Nodo[] { };
-            sumCapturadas = 0;
+            CapturaBalance = 0;
         }
 
-        public Nodo(int[] tabuleiroAnterior, int peca, int from, int to, int capturadas) {
+        public Nodo(int[] tabuleiroAnterior, int peca, int from, int to) {
             filhos = new Nodo[]{};
-            sumCapturadas = capturadas;
+            CapturaBalance = 0;
             
             estadoTabuleiro = new int[137];
             tabuleiroAnterior.CopyTo(estadoTabuleiro, 0);
 
             estadoTabuleiro[from] = 0;
             estadoTabuleiro[to] = peca;
-
-            // se for catpurável, marca como capturada
-            if(PecaCapturavel(to, getPecaCor(to))){
-                estadoTabuleiro[to] = 0;
-                sumCapturadas++;
+            
+            // se desencadear capturas do rival, -- o Saldo
+            Enums.pColor cor = getPecaCor(from);
+            foreach (int i in Core.getPecasPosicao(estadoTabuleiro, cor)) {
+                if (PecaCapturavel(i, cor)) {
+                    if(i == to) estadoTabuleiro[to] = 0;
+                    CapturaBalance--;
+                }
             }
+
+            // se desencadear capturas próprias, ++ o Saldo
+            switch (cor) {
+                case Enums.pColor.preta:    cor = Enums.pColor.branca;  break;
+                case Enums.pColor.branca:   cor = Enums.pColor.preta;   break; 
+            }
+            foreach (int i in Core.getPecasPosicao(estadoTabuleiro, cor)) {
+                if (PecaCapturavel(i, cor)) {
+                    CapturaBalance++;
+                }
+            }
+        
+            MoveDe = from;
+            MovePara = estadoTabuleiro[to];
         }
 
         private bool PecaCapturavel(int pos, Enums.pColor cor){
