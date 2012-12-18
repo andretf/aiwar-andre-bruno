@@ -408,6 +408,7 @@ namespace AIWar
                             }
                         }
                     }
+                    token_posicao = iBestFrom;
                     position = iBest;
 
                     //move a peca
@@ -416,7 +417,8 @@ namespace AIWar
                 }
                 redesenhaTabuleiro();
 
-                listBoxUltimasJogadas.Items.Add("peca " + getPecaCor(position).ToString() + ": " + token_posicao.ToString() + " -> " + position.ToString());
+                listBoxUltimasJogadas.Items.Add(String.Format("peca {0}: {1} -> {2}",
+                                                getPecaCor(position).ToString(), token_posicao.ToString(), position.ToString()));
                 ScrollHistoryToTheEnd();
 
                 RemovePecasCapturadas(getPecaCor(position));
