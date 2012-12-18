@@ -104,10 +104,16 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.Enabled = false;
             this.numericUpDown1.Location = new System.Drawing.Point(433, 15);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(35, 20);
             this.numericUpDown1.TabIndex = 8;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // radioButton2
             // 

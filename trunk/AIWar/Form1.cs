@@ -392,9 +392,15 @@ namespace AIWar
 
                     //} while (!jogadaOk);
 
+
+                    Enums.pColor rivalCor = (token_jogador.Cor == Enums.pColor.branca) ? Enums.pColor.preta : Enums.pColor.branca;
+
                     ArvoreDecisao = new Nodo(TabuleiroVetor);
                     ArvoreDecisao.filhos = Core.Core.addNodosArvore(ArvoreDecisao, token_jogador.Cor);
-
+                    for (int i = 0; i < ArvoreDecisao.filhos.Length; i++) {
+                        ArvoreDecisao.filhos[i].filhos = Core.Core.addNodosArvore(ArvoreDecisao.filhos[i], rivalCor);
+                    }
+                    
                     int iBest = position;
                     int iBestFrom = token_posicao;
                     int bestCount = 0;
