@@ -377,43 +377,42 @@ namespace AIWar
                     position = indicePositionCapturaObrigatoria;
                 else
                 {
-                    do
-                    {
-                        qtdTentativasJogadas++;
-                        
-                        // qualquer jogada...
-                        if (!jogadaOk && qtdTentativasJogadas > 100)
-                        {
-                            token_posicao = EscolhePecaPc(token_jogador.Cor);
-                            foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao))
-                            {
-                                //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
-                                position = peca; //no momento pega a ultima casa avaliada
-                            }
-                            jogadaOk = true;
-                        }
+                    //do {
+                    //    qtdTentativasJogadas++;
 
-                    } while (!jogadaOk);
+                    //    // qualquer jogada...
+                    //    if (!jogadaOk && qtdTentativasJogadas > 100) {
+                    //        token_posicao = EscolhePecaPc(token_jogador.Cor);
+                    //        foreach (int peca in Core.Core.getCasasVisiveis(TabuleiroVetor, token_posicao)) {
+                    //            //SELECIONA QUALQUER CASA PARA SE MOVER E VAI CAVALO
+                    //            position = peca; //no momento pega a ultima casa avaliada
+                    //        }
+                    //        jogadaOk = true;
+                    //    }
+
+                    //} while (!jogadaOk);
 
                     ArvoreDecisao = new Nodo(TabuleiroVetor);
                     ArvoreDecisao.filhos = Core.Core.addNodosArvore(ArvoreDecisao, token_jogador.Cor);
 
                     int iBest = position;
+                    int iBestFrom = token_posicao;
                     int bestCount = 0;
                     foreach (Nodo filho in ArvoreDecisao.filhos) {
                         if (filho.MovePara > 0) {
-                            int minmaxNodo = Core.Core.Negamax(filho, 1, 0, 10, 15);
+                            int minmaxNodo = Core.Core.Negamax(filho, (int)numericUpDown1.Value, 10, 15, -10);
                             if (minmaxNodo > bestCount) {
                                 bestCount = minmaxNodo;
                                 iBest = filho.MovePara;
+                                iBestFrom = filho.MoveDe;
                             }
                         }
                     }
                     position = iBest;
 
                     //move a peca
-                    TabuleiroVetor[position] = TabuleiroVetor[token_posicao];
-                    TabuleiroVetor[token_posicao] = 0;
+                    TabuleiroVetor[position] = TabuleiroVetor[iBestFrom];
+                    TabuleiroVetor[iBestFrom] = 0;
                 }
                 redesenhaTabuleiro();
 
@@ -848,5 +847,6 @@ namespace AIWar
             listBoxUltimasJogadas.TopIndex = Math.Max(listBoxUltimasJogadas.Items.Count - visibleItems + 1, 0);
         }
 #endregion
+
     }
 }

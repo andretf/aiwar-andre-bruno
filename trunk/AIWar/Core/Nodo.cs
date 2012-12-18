@@ -45,7 +45,7 @@ namespace AIWar.Core {
             }
         
             MoveDe = from;
-            MovePara = estadoTabuleiro[to];
+            MovePara = to;
         }
 
         private bool PecaCapturavel(int pos, Enums.pColor cor){
